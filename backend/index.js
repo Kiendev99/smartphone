@@ -11,7 +11,7 @@ app.get("/", (req,res)=>{
     res.send("Chao mung den voi the gioi di dong")
 })
 app.get("/products", (req,res)=>{
-    res.send([products])
+    res.send(products)
 })
 
 const port = process.env.port || 8080
