@@ -4,7 +4,7 @@ const products = [
       name: "iPhone 12 Pro Max",
       brand: "Apple",
       desc: "May sieu muot",
-      price: 999,
+      price: 799,
       image:
         "https://res.cloudinary.com/diu3pel1q/image/upload/v1691218714/redux%28smartphone%29/iphone-12-pro-max-quoc-te-256gb-moi-99-likenew-xam_k88omr.png  ",
     },
@@ -13,7 +13,7 @@ const products = [
       name: "iPhone 13 Pro Max",
       brand: "Apple",
       desc: "May sieu cui",
-      price: 699,
+      price: 999,
       image:
         "https://res.cloudinary.com/diu3pel1q/image/upload/v1691218585/redux%28smartphone%29/iphone-13-pro-max-plata-01_bizb7j.jpg",
     },
