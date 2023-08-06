@@ -25,5 +25,6 @@ const port = process.env.port || 8080
 const uri = process.env.DB_URI
 app.listen(8080,console.log(`Server running on port ${port}`));
 mongoose.connect( "mongodb://127.0.0.1:27017/smartphone" )
+
 .then(()=> console.log("MongDB connection succesfull..."))
 .catch((err)=> console.log("MongDB connection failed", err.message))

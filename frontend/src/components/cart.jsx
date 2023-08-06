@@ -6,13 +6,15 @@ import {
   decreaseCart,
   getTotals,
   removeFromCart,
-} from "../features/cartSlice";
+} from "../slices/cartSlice";
 
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import PayButton from "./PayButton";
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
+  const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getTotals());
@@ -101,7 +103,16 @@ const Cart = () => {
                 <span className="amount">${cart.cartTotalAmount}</span>
               </div>
               <p></p>
-              <button>Check out</button>
+              {auth._id ? (
+                <PayButton cartItems={cart.cartItems} />
+              ) : (
+                <button
+                  className="cart-login"
+                  onClick={() => navigate("/login")}
+                >
+                   Đăng nhập để thanh toán
+                </button>
+              )}
               <div className="continue-shopping">
                 <Link to="/">
                   <svg

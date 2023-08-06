@@ -1,7 +1,12 @@
 import { Link } from "react-router-dom";
-
+import { useSelector, useDispatch } from "react-redux";
+import styled from "styled-components";
+import { logoutUser } from "../slices/authSlices";
+import { toast } from "react-toastify";
 const NavBar = () => {
-  
+  const dispatch = useDispatch();
+  const { cartTotalQuantity } = useSelector((state) => state.cart);
+  const auth = useSelector((state) => state.auth);
   return (
     <nav className="nav-bar">
       <Link to="/">
@@ -24,8 +29,37 @@ const NavBar = () => {
           </span>
         </div>
       </Link>
+      {
+        auth._id ? <Logout onClick={()=>{
+          dispatch(logoutUser(null));
+          toast.warning("Đăng xuất thành công!",{
+          position: "bottom-left"
+          })
+        }}>
+          Đăng Xuất
+        </Logout>: <AuthLinks>
+          <Link to = "/login">
+            Đăng Nhập
+          </Link>
+          <Link to = "/register">
+            Đăng Ký
+          </Link>
+        </AuthLinks>
+      }
     </nav>
   );
 };
 
 export default NavBar;
+const AuthLinks = styled.div`
+  a {
+    &:last-child {
+      margin-left: 2rem;
+    }
+  }
+`;
+const Logout = styled.div`
+color: white;
+cursor: pointer;
+
+`
