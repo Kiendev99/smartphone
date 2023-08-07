@@ -5,7 +5,6 @@ import { logoutUser } from "../slices/authSlices";
 import { toast } from "react-toastify";
 const NavBar = () => {
   const dispatch = useDispatch();
-  const { cartTotalQuantity } = useSelector((state) => state.cart);
   const auth = useSelector((state) => state.auth);
   return (
     <nav className="nav-bar">
@@ -30,14 +29,20 @@ const NavBar = () => {
         </div>
       </Link>
       {
-        auth._id ? <Logout onClick={()=>{
+        auth._id ?(
+        <Links>
+        <div>
+          <Link to ="admin">Admin</Link>
+        </div>
+         <div onClick={()=>{
           dispatch(logoutUser(null));
           toast.warning("Đăng xuất thành công!",{
           position: "bottom-left"
           })
         }}>
           Đăng Xuất
-        </Logout>: <AuthLinks>
+        </div>
+        </Links>):( <AuthLinks>
           <Link to = "/login">
             Đăng Nhập
           </Link>
@@ -45,7 +50,7 @@ const NavBar = () => {
             Đăng Ký
           </Link>
         </AuthLinks>
-      }
+      )}
     </nav>
   );
 };
@@ -58,8 +63,15 @@ const AuthLinks = styled.div`
     }
   }
 `;
-const Logout = styled.div`
-color: white;
-cursor: pointer;
+const Links = styled.div`
+  color: white;
+  display: flex;
 
-`
+  div {
+    cursor: pointer;
+
+    &:last-child {
+      margin-left: 2rem;
+    }
+  }
+`;
