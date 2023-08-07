@@ -85,11 +85,36 @@ router.get("/find/:id", async (req, res) => {
 //UPDATE
 
 router.put("/:id", isAdmin, async (req, res) => {
+  if(req.body.productImg){
+      const destroyResponse = await cloudinary.uploader.destroy(
+        req.body.product.image.public_id
+      );
+      if(destroyResponse){
+        const uploadedResponse = await cloudinary.uploader.upload(
+          req.product.productImg,
+          {
+            upload_preset: "redux(smartphone)",
+          }
+        );
+        if(uploadedResponse){
+          const updatedProduct = await Product.findByIdAndUpdate(
+            req.params.id,{
+              $set:{
+                ...req.body.product,
+                image: uploadedResponse,
+              },
+            },
+            {new: true}
+          );
+          res.status(200).send(updatedProduct);
+        }
+      }
+  } else {
   try {
     const updatedProduct = await Product.findByIdAndUpdate(
       req.params.id,
       {
-        $set: req.body,
+        $set: req.body.product,
       },
       { new: true }
     );
@@ -97,6 +122,7 @@ router.put("/:id", isAdmin, async (req, res) => {
   } catch (error) {
     res.status(500).send(error);
   }
+}
 });
 
 module.exports = router;

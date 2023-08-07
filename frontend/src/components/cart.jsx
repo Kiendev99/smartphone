@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addToCart,
@@ -8,11 +9,13 @@ import {
   removeFromCart,
 } from "../slices/cartSlice";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import PayButton from "./PayButton";
+
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
   const auth = useSelector((state) => state.auth);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -37,7 +40,7 @@ const Cart = () => {
       <h2>Shopping Cart</h2>
       {cart.cartItems.length === 0 ? (
         <div className="cart-empty">
-          <p>Giỏ hàng của bạn hiện tại đang trống</p>
+          <p>Your cart is currently empty</p>
           <div className="start-shopping">
             <Link to="/">
               <svg
@@ -53,7 +56,7 @@ const Cart = () => {
                   d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"
                 />
               </svg>
-              <span>Bắt đầu mua sắm</span>
+              <span>Start Shopping</span>
             </Link>
           </div>
         </div>
@@ -75,7 +78,7 @@ const Cart = () => {
                       <h3>{cartItem.name}</h3>
                       <p>{cartItem.desc}</p>
                       <button onClick={() => handleRemoveFromCart(cartItem)}>
-                        Remove
+                        Xóa
                       </button>
                     </div>
                   </div>
@@ -102,7 +105,7 @@ const Cart = () => {
                 <span>Tổng tiền</span>
                 <span className="amount">${cart.cartTotalAmount}</span>
               </div>
-              <p></p>
+              
               {auth._id ? (
                 <PayButton cartItems={cart.cartItems} />
               ) : (
@@ -110,9 +113,10 @@ const Cart = () => {
                   className="cart-login"
                   onClick={() => navigate("/login")}
                 >
-                   Đăng nhập để thanh toán
+                  Đăng nhập để thanh toán
                 </button>
               )}
+
               <div className="continue-shopping">
                 <Link to="/">
                   <svg

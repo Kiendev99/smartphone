@@ -13,6 +13,10 @@ import Dashboard from './components/admin/Dashboard';
 import Products from './components/admin/Products'
 import Summary from './components/admin/Summary';
 import CreateProduct from './components/admin/CreateProduct'
+import ProductsList from './components/admin/list/ProductsList';
+import Users from './components/admin/Users';
+import Product from './components/Details/Product';
+import UserProfile from './components/Details/UserProfile';
 function App() {
   return <div className='App'>
     <BrowserRouter>
@@ -22,11 +26,15 @@ function App() {
         <Route path='/cart' element={<Cart/>} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/product/:id" element={<Product />} />
+        <Route path="/user/:id" element={<UserProfile />} />
         <Route path="/admin" element={<Dashboard />}>
             <Route path="products" element={<Products />} >
+            <Route index element={<ProductsList />} />
             <Route path="create-product" element={<CreateProduct />} />
             </Route>
             <Route path="summary" element={<Summary />} />
+            <Route path="users" element={<Users />} />
         </Route>
         <Route path='/not-found'  element={<Notfound/>} />
         <Route path='/' exact element={<Home/>} />

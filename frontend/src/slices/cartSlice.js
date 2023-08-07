@@ -15,7 +15,7 @@ const cartSlice = createSlice({
   reducers: {
     addToCart(state, action) {
       const existingIndex = state.cartItems.findIndex(
-        (item) => item.id === action.payload.id
+        (item) => item._id === action.payload._id
       );
 
       if (existingIndex >= 0) {
@@ -29,7 +29,7 @@ const cartSlice = createSlice({
       } else {
         let tempProductItem = { ...action.payload, cartQuantity: 1 };
         state.cartItems.push(tempProductItem);
-        toast.success("Sản phẩm đã được thêm vào giỏ", {
+        toast.success("Đã thêm sản phẩm vào giỏ", {
           position: "bottom-left",
         });
       }
@@ -37,23 +37,23 @@ const cartSlice = createSlice({
     },
     decreaseCart(state, action) {
       const itemIndex = state.cartItems.findIndex(
-        (item) => item.id === action.payload.id
+        (item) => item._id === action.payload._id
       );
 
       if (state.cartItems[itemIndex].cartQuantity > 1) {
         state.cartItems[itemIndex].cartQuantity -= 1;
 
-        toast.info("Giảm số lượng sp", {
+        toast.info("Giảm số lượng sản phẩm", {
           position: "bottom-left",
         });
       } else if (state.cartItems[itemIndex].cartQuantity === 1) {
         const nextCartItems = state.cartItems.filter(
-          (item) => item.id !== action.payload.id
+          (item) => item._id !== action.payload._id
         );
 
         state.cartItems = nextCartItems;
 
-        toast.error("Loại bỏ sp ra giỏ hàng", {
+        toast.error("Đã xóa sản phẩm khỏi giỏ hàng", {
           position: "bottom-left",
         });
       }
@@ -62,14 +62,14 @@ const cartSlice = createSlice({
     },
     removeFromCart(state, action) {
       state.cartItems.map((cartItem) => {
-        if (cartItem.id === action.payload.id) {
+        if (cartItem._id === action.payload._id) {
           const nextCartItems = state.cartItems.filter(
-            (item) => item.id !== cartItem.id
+            (item) => item._id !== cartItem._id
           );
 
           state.cartItems = nextCartItems;
 
-          toast.error("Loại bỏ sp ra giỏ hàng", {
+          toast.error("Đã xóa sản phẩm khỏi giỏ hàng", {
             position: "bottom-left",
           });
         }

@@ -3,9 +3,14 @@ import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { logoutUser } from "../slices/authSlices";
 import { toast } from "react-toastify";
+
 const NavBar = () => {
   const dispatch = useDispatch();
+  const { cartTotalQuantity } = useSelector((state) => state.cart);
   const auth = useSelector((state) => state.auth);
+
+  console.log(auth);
+
   return (
     <nav className="nav-bar">
       <Link to="/">
@@ -24,31 +29,30 @@ const NavBar = () => {
             <path d="M8 1a2 2 0 0 0-2 2v2H5V3a3 3 0 1 1 6 0v2h-1V3a2 2 0 0 0-2-2zM5 5H3.36a1.5 1.5 0 0 0-1.483 1.277L.85 13.13A2.5 2.5 0 0 0 3.322 16h9.355a2.5 2.5 0 0 0 2.473-2.87l-1.028-6.853A1.5 1.5 0 0 0 12.64 5H11v1.5a.5.5 0 0 1-1 0V5H6v1.5a.5.5 0 0 1-1 0V5z" />
           </svg>
           <span className="bag-quantity">
-            
+            <span>{cartTotalQuantity}</span>
           </span>
         </div>
       </Link>
-      {
-        auth._id ?(
+      {auth._id ? (
         <Links>
-        <div>
-          <Link to ="admin">Admin</Link>
-        </div>
-         <div onClick={()=>{
-          dispatch(logoutUser(null));
-          toast.warning("Đăng xuất thành công!",{
-          position: "bottom-left"
-          })
-        }}>
-          Đăng Xuất
-        </div>
-        </Links>):( <AuthLinks>
-          <Link to = "/login">
-            Đăng Nhập
-          </Link>
-          <Link to = "/register">
-            Đăng Ký
-          </Link>
+          {auth.isAdmin ? (
+            <div>
+              <Link to="/admin/summary">Admin</Link>
+            </div>
+          ) : null}
+          <div
+            onClick={() => {
+              dispatch(logoutUser(null));
+              toast.warning("Đã đăng xuất!", { position: "bottom-left" });
+            }}
+          >
+            Đăng xuất
+          </div>
+        </Links>
+      ) : (
+        <AuthLinks>
+          <Link to="/login">Đăng nhập</Link>
+          <Link to="register">Đăng ký</Link>
         </AuthLinks>
       )}
     </nav>
@@ -56,6 +60,7 @@ const NavBar = () => {
 };
 
 export default NavBar;
+
 const AuthLinks = styled.div`
   a {
     &:last-child {
@@ -63,6 +68,7 @@ const AuthLinks = styled.div`
     }
   }
 `;
+
 const Links = styled.div`
   color: white;
   display: flex;
