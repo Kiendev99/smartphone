@@ -5,7 +5,7 @@ const products = require("./products")
 const register = require("./routes/register")
 const login = require("./routes/login")
 const productsRoute = require("./routes/products")
-
+const usersRoute = require("./routes/user")
 const app = express()
 require ("dotenv").config()
 
@@ -16,6 +16,7 @@ app.use(cors())
 app.use ("/api/register", register)
 app.use ("/api/login", login)
 app.use ("/api/products", productsRoute)
+app.use ("/api/users", usersRoute)
 app.get("/", (req,res)=>{
     res.send("Chao mung den voi the gioi di dong")
 })
